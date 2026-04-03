@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Budget Survival App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #0f172a, #1e293b);
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: auto;
+      background: #111827;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      color: #38bdf8;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 95%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      background: #38bdf8;
+      color: black;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0ea5e9;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .positive {
+      color: #22c55e;
+    }
+
+    .negative {
+      color: #ef4444;
+    }
+
+    .tips {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #facc15;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>💰 Budget Survival</h1>
+    <p>Track your money. Stay in control.</p>
+
+    <input type="number" id="income" placeholder="💵 Income">
+
+    <input type="number" id="rent" placeholder="🏠 Rent">
+    <input type="number" id="food" placeholder="🍔 Food">
+    <input type="number" id="transport" placeholder="🚗 Transport">
+    <input type="number" id="other" placeholder="📦 Other expenses">
+
+    <button onclick="calculateBudget()">Calculate Budget</button>
+
+    <div class="result" id="result"></div>
+    <div class="tips" id="tips"></div>
+  </div>
+
+  <script>
+    function calculateBudget() {
+      let income = Number(document.getElementById("income").value) || 0;
+      let rent = Number(document.getElementById("rent").value) || 0;
+      let food = Number(document.getElementById("food").value) || 0;
+      let transport = Number(document.getElementById("transport").value) || 0;
+      let other = Number(document.getElementById("other").value) || 0;
+
+      let totalExpenses = rent + food + transport + other;
+      let remaining = income - totalExpenses;
+
+      let result = document.getElementById("result");
+      let tips = document.getElementById("tips");
+
+      if (remaining > 0) {
+        result.innerHTML = "✅ You have $" + remaining + " left";
+        result.className = "result positive";
+        tips.innerHTML = "👍 You're doing good! Try saving some of it.";
+      } 
+      else if (remaining === 0) {
+        result.innerHTML = "⚠️ You are at $0";
+        result.className = "result";
+        tips.innerHTML = "😐 No extra money. Be careful with spending.";
+      } 
+      else {
+        result.innerHTML = "🚨 Over budget by $" + Math.abs(remaining);
+        result.className = "result negative";
+        tips.innerHTML = "❗ Cut costs where you can (food, transport, etc).";
+      }
+    }
+  </script>
+
+</body>
+</html>
